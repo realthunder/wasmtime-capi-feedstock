@@ -52,8 +52,22 @@ build:
 
 requirements:
   build:
+    # Not to compile against -- nothing here is compiled.  It is what makes
+    # the package state the glibc it actually needs (2.28, measured from
+    # the artifact's symbol versions; see conda_build_config.yaml).
+    - ${{ stdlib('c') }}
     - if: linux
       then: patchelf
+  host:
+    # Present so the linking check can account for libgcc_s, which the
+    # artifact needs; nothing is compiled against it.
+    - if: linux
+      then: libgcc
+  run:
+    # Rust binaries pull in libgcc_s for unwinding; nothing else outside
+    # libc is linked (checked against the artifact's DT_NEEDED).
+    - if: linux
+      then: libgcc
   run_exports:
     # wasmtime breaks its C ABI across major versions and keeps it within
     # one, which is exactly what the SONAME says.
