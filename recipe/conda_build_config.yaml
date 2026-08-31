@@ -1,0 +1,12 @@
+# Where the build resolves deps from, and where the artifact is labelled
+# for.  Kept here rather than only in the rendered .ci_support files so a
+# `conda smithy rerender` cannot reset them (the arrangement
+# freecad-rt-feedstock and smesh-feedstock use).
+#
+# Nothing here is built against a realthunder package -- the build needs
+# patchelf on linux and nothing else -- so conda-forge is the only source,
+# which also keeps strict channel priority out of the way.
+channel_sources:
+  - conda-forge
+channel_targets:
+  - realthunder main

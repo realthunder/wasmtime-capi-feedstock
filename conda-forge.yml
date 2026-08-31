@@ -1,0 +1,27 @@
+# The recipe is rattler-build's, and the fork's channel settings live in
+# recipe/conda_build_config.yaml so a rerender cannot reset them (the
+# arrangement smesh-feedstock and freecad-rt-feedstock use).
+conda_build_tool: rattler-build
+conda_build:
+  pkg_format: '2'
+conda_forge_output_validation: false
+build_platform:
+  osx_arm64: osx_64
+github:
+  user_or_org: realthunder
+  branch_name: master
+  tooling_branch_name: main
+provider:
+  # The consumers of this package ship on all four, and the work is
+  # unpacking an artifact rather than compiling, so every platform is
+  # cheap to build here.
+  linux_64: github_actions
+  osx_64: github_actions
+  osx_arm64: github_actions
+  win_64: github_actions
+# README.md is written by hand -- it explains why this repackages an
+# official artifact instead of building from source, which smithy's
+# template cannot say.
+skip_render:
+  - README.md
+test: native_and_emulated
