@@ -6,7 +6,7 @@ context:
   build: 0
 
 package:
-  name: wasmtime-capi
+  name: wasmtime
   version: ${{ version }}
 
 # The upstream RELEASE ARTIFACT, not a source build. wasmtime is Rust, and
@@ -71,7 +71,7 @@ requirements:
   run_exports:
     # wasmtime breaks its C ABI across major versions and keeps it within
     # one, which is exactly what the SONAME says.
-    - ${{ pin_subpackage('wasmtime-capi', upper_bound='x') }}
+    - ${{ pin_subpackage('wasmtime', upper_bound='x') }}
 
 tests:
   - package_contents:
